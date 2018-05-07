@@ -1,0 +1,17 @@
+{
+  "CN": "webhook-ca",
+  "key": {
+    "algo": "rsa",
+    "size": 2048
+  },
+  "names": [
+    {
+      "C": "US",
+      "L": "New York",
+      "O": "Koshkin",
+      "OU": "CA",
+      "ST": "New York"
+    }
+  ]
+}
+

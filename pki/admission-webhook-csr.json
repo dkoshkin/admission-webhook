@@ -1,0 +1,23 @@
+{
+  "CN": "admission-webhook.default.svc",
+  "hosts": [
+    "127.0.0.1",
+    "admission-webhook",
+    "admission-webhook.default",
+    "admission-webhook.default",
+    "admission-webhook.default.svc"
+  ],
+  "key": {
+    "algo": "rsa",
+    "size": 2048
+  },
+  "names": [
+    {
+      "C": "US",
+      "L": "New York",
+      "O": "Koshkin",
+      "OU": "Admission Webhook",
+      "ST": "New York"
+    }
+  ]
+}

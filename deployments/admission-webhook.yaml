@@ -1,0 +1,60 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: admission-webhook-certs
+  namespace: default
+type: Opaque
+data:
+  ca.pem: __CA__
+  webhook.pem: __TLS_CERT__
+  webhook-key.pem: __TLS_KEY__
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: admission-webhook
+  namespace: default
+  labels:
+    app: admission-webhook
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: admission-webhook
+  template:
+    metadata:
+      labels:
+        app: admission-webhook
+    spec:
+      containers:
+        - name: admission-webhook
+          image: arduima/admission-webhook
+          command: ["/admission-webhook"]
+          args:
+            - --tls-ca-file=/etc/certs/ca.pem
+            - --tls-cert-file=/etc/certs/webhook.pem
+            - --tls-private-key-file=/etc/certs/webhook-key.pem
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 443
+          volumeMounts:
+            - name: certs
+              mountPath: /etc/certs
+              readOnly: true
+      volumes:
+        - name: certs
+          secret:
+            secretName: admission-webhook-certs
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: admission-webhook
+  namespace: default
+spec:
+  selector:
+    app: admission-webhook
+  ports:
+    - protocol: TCP
+      port: 443
+      targetPort: 443

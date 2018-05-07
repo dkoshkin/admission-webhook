@@ -1,0 +1,20 @@
+package: github.com/dkoshkin/admission-webhook
+import:
+- package: github.com/golang/glog
+- package: k8s.io/api
+  subpackages:
+  - admission/v1beta1
+  - admissionregistration/v1beta1
+  - core/v1
+- package: k8s.io/apimachinery
+  version: release-1.10
+  subpackages:
+  - pkg/api/meta
+  - pkg/apis/meta/v1
+  - pkg/runtime
+  - pkg/runtime/serializer
+- package: k8s.io/client-go
+  version: v7.0.0
+  subpackages:
+  - kubernetes
+  - rest
